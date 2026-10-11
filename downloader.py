@@ -1,6 +1,7 @@
 import os
 import sys
 import subprocess
+import json
 
 # --- 1. Auto-Check & Install Required Dependencies ---
 REQUIRED_PACKAGES = {
@@ -45,6 +46,25 @@ os.environ["PATH"] += os.pathsep + os.path.dirname(ffmpeg_path)
 ctk.set_appearance_mode("Dark")
 ctk.set_default_color_theme("green")
 
+# Config file path
+CONFIG_FILE = os.path.join(os.path.expanduser("~"), ".yt_downloader_config.json")
+
+def load_config():
+    if os.path.exists(CONFIG_FILE):
+        try:
+            with open(CONFIG_FILE, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except:
+            pass
+    return {"save_path": os.path.join(os.path.expanduser("~"), "Downloads")}
+
+def save_config(config):
+    try:
+        with open(CONFIG_FILE, "w", encoding="utf-8") as f:
+            json.dump(config, f, ensure_ascii=False, indent=4)
+    except:
+        pass
+
 # --- Translations Dictionary ---
 TRANSLATIONS = {
     "ar": {
@@ -72,8 +92,13 @@ TRANSLATIONS = {
         "waiting": "في انتظار بدء المهمة...",
         "overall_label": "التقدم الكلي للقائمة:",
         "lang_label": "اللغة:",
+        "settings_btn": "⚙️ الإعدادات",
+        "settings_title": "إعدادات الأداة (Settings)",
+        "settings_path_label": "المجلد الافتراضي لحفظ التحميلات:",
+        "save_settings_btn": "حفظ الإعدادات",
         "success_title": "عملية ناجحة",
         "success_msg": "تم تحميل ومعالجة جميع الملفات بنجاح!",
+        "settings_saved": "تم حفظ الإعدادات بنجاح!",
         "error_title": "تنبيه خطأ",
         "error_url": "الرجاء إدخال رابط صالح أولاً!",
         "error_path": "تعذر إنشاء أو الوصول لمجلد الحفظ:",
@@ -110,8 +135,13 @@ TRANSLATIONS = {
         "waiting": "Waiting for task...",
         "overall_label": "Overall Progress:",
         "lang_label": "Language:",
+        "settings_btn": "⚙️ Settings",
+        "settings_title": "Application Settings",
+        "settings_path_label": "Default Download Directory:",
+        "save_settings_btn": "Save Settings",
         "success_title": "Success",
         "success_msg": "All files downloaded and processed successfully!",
+        "settings_saved": "Settings saved successfully!",
         "error_title": "Error",
         "error_url": "Please enter a valid URL!",
         "error_path": "Could not create or access directory:",
@@ -148,15 +178,20 @@ TRANSLATIONS = {
         "waiting": "Görev bekleniyor...",
         "overall_label": "Genel İlerleme:",
         "lang_label": "Dil:",
+        "settings_btn": "⚙️ Ayarlar",
+        "settings_title": "Uygulama Ayarları",
+        "settings_path_label": "Varsayılan İndirme Klasörü:",
+        "save_settings_btn": "Ayarları Kaydet",
         "success_title": "Başarılı",
         "success_msg": "Tüm dosyalar başarıyla indirildi ve işlendi!",
+        "settings_saved": "Ayarlar başarıyla kaydedildi!",
         "error_title": "Hata",
         "error_url": "Lütfen geçerli bir URL girin!",
         "error_path": "Dizin oluşturulamadı veya erişilemedi:",
         "stopped": "İşlem kullanıcı tarafından durduruldu.",
         "downloading": "İndiriliyor",
         "speed": "Hız",
-        "eta": "Kalan Süre",
+        "eta": "Kalan Süре",
         "processing": "FFmpeg ile işleniyor ve birleştiriliyor...",
         "completed": "tamamlandı",
         "footer": "Designed & Developed by Mahmoud Ali • Enterprise Grade"
@@ -167,6 +202,7 @@ class YouTubeDownloaderApp(ctk.CTk):
     def __init__(self):
         super().__init__()
 
+        self.config_data = load_config()
         self.current_lang = "ar"
         self.t = TRANSLATIONS[self.current_lang]
 
@@ -182,6 +218,7 @@ class YouTubeDownloaderApp(ctk.CTk):
         self.header_frame.grid(row=0, column=0, sticky="ew")
         self.header_frame.grid_columnconfigure(0, weight=1)
         self.header_frame.grid_columnconfigure(1, weight=0)
+        self.header_frame.grid_columnconfigure(2, weight=0)
 
         self.logo_title = ctk.CTkLabel(
             self.header_frame, 
@@ -199,6 +236,18 @@ class YouTubeDownloaderApp(ctk.CTk):
         )
         self.logo_sub.grid(row=1, column=0, padx=25, pady=(0, 15), sticky="w")
 
+        # Settings Button
+        self.settings_btn = ctk.CTkButton(
+            self.header_frame,
+            text=self.t["settings_btn"],
+            width=110,
+            height=35,
+            fg_color="#27272a",
+            hover_color="#3f3f46",
+            command=self.open_settings_window
+        )
+        self.settings_btn.grid(row=0, column=1, rowspan=2, padx=(0, 15), sticky="e")
+
         # Language Switcher in Header
         self.lang_var = ctk.StringVar(value="العربية (AR)")
         self.lang_menu = ctk.CTkOptionMenu(
@@ -206,12 +255,12 @@ class YouTubeDownloaderApp(ctk.CTk):
             values=["العربية (AR)", "English (EN)", "Türkçe (TR)"],
             variable=self.lang_var,
             command=self.change_language,
-            width=140,
+            width=130,
             fg_color="#27272a",
             button_color="#3f3f46",
             button_hover_color="#52525b"
         )
-        self.lang_menu.grid(row=0, column=1, rowspan=2, padx=25, sticky="e")
+        self.lang_menu.grid(row=0, column=2, rowspan=2, padx=25, sticky="e")
 
         # --- Main Card Container ---
         self.main_card = ctk.CTkFrame(self, fg_color="#202024", corner_radius=12)
@@ -302,7 +351,7 @@ class YouTubeDownloaderApp(ctk.CTk):
 
         self.path_entry = ctk.CTkEntry(self.path_sub_frame, height=35, fg_color="#18181b", border_color="#3f3f46")
         self.path_entry.grid(row=0, column=0, padx=(0, 10), sticky="ew")
-        self.path_entry.insert(0, os.path.join(os.path.expanduser("~"), "Downloads"))
+        self.path_entry.insert(0, self.config_data.get("save_path", os.path.join(os.path.expanduser("~"), "Downloads")))
 
         self.browse_btn = ctk.CTkButton(
             self.path_sub_frame, 
@@ -315,7 +364,6 @@ class YouTubeDownloaderApp(ctk.CTk):
         )
         self.browse_btn.grid(row=0, column=1)
 
-        # Padding at bottom of card
         spacer = ctk.CTkLabel(self.main_card, text="", height=5)
         spacer.grid(row=7, column=0)
 
@@ -352,7 +400,6 @@ class YouTubeDownloaderApp(ctk.CTk):
         self.prog_card.grid(row=3, column=0, padx=20, pady=10, sticky="ew")
         self.prog_card.grid_columnconfigure(1, weight=1)
 
-        # Current Item Progress
         self.curr_label_title = ctk.CTkLabel(self.prog_card, text=self.t["curr_item_label"], font=("Segoe UI", 11, "bold"))
         self.curr_label_title.grid(row=0, column=0, padx=15, pady=(12, 2), sticky="w")
 
@@ -363,7 +410,6 @@ class YouTubeDownloaderApp(ctk.CTk):
         self.curr_bar.grid(row=1, column=0, columnspan=2, padx=15, pady=(0, 10), sticky="ew")
         self.curr_bar.set(0)
 
-        # Overall Progress
         self.overall_label_title = ctk.CTkLabel(self.prog_card, text=self.t["overall_label"], font=("Segoe UI", 11, "bold"))
         self.overall_label_title.grid(row=2, column=0, padx=15, pady=(2, 2), sticky="w")
 
@@ -395,6 +441,54 @@ class YouTubeDownloaderApp(ctk.CTk):
         self.after(100, self.process_queue)
         self.ydl_instance = None
 
+    def open_settings_window(self):
+        settings_win = ctk.CTkToplevel(self)
+        settings_win.title(self.t["settings_title"])
+        settings_win.geometry("500x250")
+        settings_win.resizable(False, False)
+        settings_win.grab_set() # Modal window
+
+        # Center window
+        settings_win.update_idletasks()
+        x = self.winfo_x() + (self.winfo_width() // 2) - (500 // 2)
+        y = self.winfo_y() + (self.winfo_height() // 2) - (250 // 2)
+        settings_win.geometry(f"+{x}+{y}")
+
+        lbl = ctk.CTkLabel(settings_win, text=self.t["settings_path_label"], font=("Segoe UI", 13, "bold"))
+        lbl.pack(padx=25, pady=(30, 10), anchor="w")
+
+        frame = ctk.CTkFrame(settings_win, fg_color="transparent")
+        frame.pack(padx=25, pady=5, fill="x")
+        frame.grid_columnconfigure(0, weight=1)
+
+        path_e = ctk.CTkEntry(frame, height=38, fg_color="#18181b", border_color="#3f3f46")
+        path_e.grid(row=0, column=0, padx=(0, 10), sticky="ew")
+        path_e.insert(0, self.path_entry.get())
+
+        def browse_settings():
+            d = filedialog.askdirectory(parent=settings_win)
+            if d:
+                path_e.delete(0, tk.END)
+                path_e.insert(0, d)
+
+        b_btn = ctk.CTkButton(frame, text=self.t["browse_btn"], width=100, height=38, fg_color="#3f3f46", hover_color="#52525b", command=browse_settings)
+        b_btn.grid(row=0, column=1)
+
+        def save_and_close():
+            new_path = path_e.get().strip()
+            if os.path.exists(new_path):
+                self.path_entry.delete(0, tk.END)
+                self.path_entry.insert(0, new_path)
+                self.config_data["save_path"] = new_path
+                save_config(self.config_data)
+                messagebox.showinfo(self.t["success_title"], self.t["settings_saved"], parent=settings_win)
+                settings_win.destroy()
+            else:
+                messagebox.showerror(self.t["error_title"], "المجلد غير موجود أو غير صالح!", parent=settings_win)
+
+        save_btn = ctk.CTkButton(settings_win, text=self.t["save_settings_btn"], font=("Segoe UI", 13, "bold"), height=42, fg_color="#10b981", hover_color="#059669", command=save_and_close)
+        save_btn.pack(padx=25, pady=(20, 20), fill="x")
+
     def change_language(self, choice):
         if "AR" in choice:
             self.current_lang = "ar"
@@ -410,6 +504,7 @@ class YouTubeDownloaderApp(ctk.CTk):
         self.title(self.t["title"])
         self.logo_title.configure(text="⚡ " + self.t["header_title"])
         self.logo_sub.configure(text=self.t["header_subtitle"])
+        self.settings_btn.configure(text=self.t["settings_btn"])
         self.url_label.configure(text=self.t["url_label"])
         self.url_entry.configure(placeholder_text=self.t["url_placeholder"])
         self.type_label.configure(text=self.t["type_label"])
@@ -430,8 +525,7 @@ class YouTubeDownloaderApp(ctk.CTk):
         self.mode_var.set(self.t["mode_playlist"])
 
         self.speed_label.configure(text=self.t["speed_label"])
-        self.speed_menu.configure(values=[self.t["speed_unlimited"], "500 KB/s", "1 MB/s", "2 MB/s", "5 MB/s"])
-        self.speed_var.set(self.t["speed_unlimited"])
+        self.speed_menu.configure(values=[self.t["speed_unlimited"], "500 KB/s", "1 MB/s", "2 MB/s", "5 MB/s"], variable=self.speed_var)
 
         self.path_label.configure(text=self.t["path_label"])
         self.browse_btn.configure(text=self.t["browse_btn"])
@@ -682,4 +776,4 @@ class YouTubeDownloaderApp(ctk.CTk):
 
 if __name__ == "__main__":
     app = YouTubeDownloaderApp()
-    app.mainloop()
+    app.mainLoop() if hasattr(app, "mainLoop") else app.mainloop()
