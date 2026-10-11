@@ -10,12 +10,14 @@
   <img src="https://img.shields.io/badge/Python-3.8%2B-blue?style=for-the-badge&logo=python&logoColor=white" alt="Python">
   <img src="https://img.shields.io/badge/CustomTkinter-Modern%20UI-green?style=for-the-badge" alt="CustomTkinter">
   <img src="https://img.shields.io/badge/yt--dlp-Downloader-red?style=for-the-badge&logo=youtube" alt="yt-dlp">
-  <img src="https://img.shields.io/badge/FFmpeg-Integrated-orange?style=for-the-badge&logo=ffmpeg&logoColor=white" alt="FFmpeg">
+  <img src="https://img.shields.io/badge/Arch%20Linux-yay%20%2F%20AUR-blueviolet?style=for-the-badge&logo=archlinux&logoColor=white" alt="Arch Linux yay">
   <img src="https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge" alt="License">
 </p>
 
 <p align="center">
   🌐 <b>Multi-Language Support:</b> English 🇺🇸 | العربية 🇸🇦 | Türkçe 🇹🇷
+  <br>
+  🐧 <b>Arch Linux Ready:</b> Fully compatible with <code>yay</code> & AUR!
 </p>
 
 </div>
@@ -105,6 +107,11 @@ yay -S youtube-download-git
 
 **Mahmoud Ali**
 * GitHub: [@Mahmu0dAli](https://github.com/Mahmu0dAli)
+
+---
+
+## 🏷️ Hashtags
+#YouTubeDownloader #ArchLinux #AUR #yay #Python #CustomTkinter #OpenSource #VideoDownloader #FFmpeg
 
 ---
 
