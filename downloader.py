@@ -43,20 +43,29 @@ import imageio_ffmpeg
 ffmpeg_path = imageio_ffmpeg.get_ffmpeg_exe()
 os.environ["PATH"] += os.pathsep + os.path.dirname(ffmpeg_path)
 
-ctk.set_appearance_mode("Dark")
-ctk.set_default_color_theme("green")
-
 # Config file path
 CONFIG_FILE = os.path.join(os.path.expanduser("~"), ".yt_downloader_config.json")
 
 def load_config():
+    default_config = {
+        "save_path": os.path.join(os.path.expanduser("~"), "Downloads"),
+        "audio_codec": "mp3",
+        "audio_bitrate": "192",
+        "embed_meta": True,
+        "embed_thumb": True,
+        "download_subs": False,
+        "concurrent_frags": "4",
+        "theme_color": "green",
+        "appearance": "Dark"
+    }
     if os.path.exists(CONFIG_FILE):
         try:
             with open(CONFIG_FILE, "r", encoding="utf-8") as f:
-                return json.load(f)
+                data = json.load(f)
+                default_config.update(data)
         except:
             pass
-    return {"save_path": os.path.join(os.path.expanduser("~"), "Downloads")}
+    return default_config
 
 def save_config(config):
     try:
@@ -64,6 +73,10 @@ def save_config(config):
             json.dump(config, f, ensure_ascii=False, indent=4)
     except:
         pass
+
+config_data = load_config()
+ctk.set_appearance_mode(config_data.get("appearance", "Dark"))
+ctk.set_default_color_theme(config_data.get("theme_color", "green"))
 
 # --- Translations Dictionary ---
 TRANSLATIONS = {
@@ -91,13 +104,22 @@ TRANSLATIONS = {
         "waiting": "في انتظار بدء المهمة...",
         "overall_label": "التقدم الكلي للقائمة:",
         "lang_label": "اللغة:",
-        "settings_btn": "⚙️ الإعدادات",
-        "settings_title": "إعدادات الأداة (Settings)",
+        "settings_btn": "⚙️ الإعدادات المتقدمة",
+        "settings_title": "الإعدادات المتقدمة (Pro Settings)",
         "settings_path_label": "المجلد الافتراضي لحفظ التحميلات:",
-        "save_settings_btn": "حفظ الإعدادات",
+        "audio_codec_label": "صيغة الصوت المفضلة:",
+        "audio_bitrate_label": "جودة/معدل بت الصوت:",
+        "meta_thumb_label": "البيانات والملصقات:",
+        "embed_meta_chk": "تضمين البيانات التعريفية (Metadata)",
+        "embed_thumb_chk": "تضمين صورة الغلاف والـ Thumbnail",
+        "subs_label": "الترجمة (Subtitles):",
+        "download_subs_chk": "تحميل وتضمين الترجمة تلقائياً (العربية/الإنجليزية)",
+        "frags_label": "التسريع متعدد المسارات (Concurrent Fragments):",
+        "theme_label": "المظهر والثيم:",
+        "save_settings_btn": "حفظ جميع الإعدادات",
         "success_title": "عملية ناجحة",
         "success_msg": "تم تحميل ومعالجة جميع الملفات بنجاح!",
-        "settings_saved": "تم حفظ الإعدادات بنجاح!",
+        "settings_saved": "تم حفظ الإعدادات بنجاح! (بعض التغييرات تتطلب إعادة تشغيل الأداة)",
         "error_title": "تنبيه خطأ",
         "error_url": "الرجاء إدخال رابط صالح أولاً!",
         "error_path": "تعذر إنشاء أو الوصول لمجلد الحفظ:",
@@ -133,13 +155,22 @@ TRANSLATIONS = {
         "waiting": "Waiting for task...",
         "overall_label": "Overall Progress:",
         "lang_label": "Language:",
-        "settings_btn": "⚙️ Settings",
-        "settings_title": "Application Settings",
+        "settings_btn": "⚙️ Pro Settings",
+        "settings_title": "Advanced Pro Settings",
         "settings_path_label": "Default Download Directory:",
-        "save_settings_btn": "Save Settings",
+        "audio_codec_label": "Preferred Audio Format:",
+        "audio_bitrate_label": "Audio Bitrate/Quality:",
+        "meta_thumb_label": "Metadata & Thumbnails:",
+        "embed_meta_chk": "Embed Metadata",
+        "embed_thumb_chk": "Embed Thumbnail",
+        "subs_label": "Subtitles:",
+        "download_subs_chk": "Download and embed subtitles automatically",
+        "frags_label": "Concurrent Fragments (Multi-thread speed):",
+        "theme_label": "Theme & Appearance:",
+        "save_settings_btn": "Save All Settings",
         "success_title": "Success",
         "success_msg": "All files downloaded and processed successfully!",
-        "settings_saved": "Settings saved successfully!",
+        "settings_saved": "Settings saved successfully! (Some changes require app restart)",
         "error_title": "Error",
         "error_url": "Please enter a valid URL!",
         "error_path": "Could not create or access directory:",
@@ -175,13 +206,22 @@ TRANSLATIONS = {
         "waiting": "Görev bekleniyor...",
         "overall_label": "Genel İlerleme:",
         "lang_label": "Dil:",
-        "settings_btn": "⚙️ Ayarlar",
-        "settings_title": "Uygulama Ayarları",
+        "settings_btn": "⚙️ Pro Ayarlar",
+        "settings_title": "Gelişmiş Pro Ayarlar",
         "settings_path_label": "Varsayılan İndirme Klasörü:",
-        "save_settings_btn": "Ayarları Kaydet",
+        "audio_codec_label": "Tercih Edilen Ses Formatı:",
+        "audio_bitrate_label": "Ses Bitrate Kalitesi:",
+        "meta_thumb_label": "Meta Veriler ve Küçük Resim:",
+        "embed_meta_chk": "Meta Verileri Göm (Metadata)",
+        "embed_thumb_chk": "Küçük Resmi Göm (Thumbnail)",
+        "subs_label": "Altyazılar (Subtitles):",
+        "download_subs_chk": "Altyazıları otomatik indir ve göm",
+        "frags_label": "Eşzamanlı Parçalar (Hızlandırma):",
+        "theme_label": "Tema ve Görünüm:",
+        "save_settings_btn": "Tüm Ayarları Kaydet",
         "success_title": "Başarılı",
         "success_msg": "Tüm dosyalar başarıyla indirildi ve işlendi!",
-        "settings_saved": "Ayarlar başarıyla kaydedildi!",
+        "settings_saved": "Ayarlar kaydedildi! (Bazı değişiklikler yeniden başlatma gerektirir)",
         "error_title": "Hata",
         "error_url": "Lütfen geçerli bir URL girin!",
         "error_path": "Dizin oluşturulamadı veya erişilemedi:",
@@ -204,8 +244,8 @@ class YouTubeDownloaderApp(ctk.CTk):
         self.t = TRANSLATIONS[self.current_lang]
 
         self.title(self.t["title"])
-        self.geometry("850x700")
-        self.minsize(750, 650)
+        self.geometry("850x720")
+        self.minsize(750, 670)
 
         self.grid_columnconfigure(0, weight=1)
         self.grid_rowconfigure(5, weight=1)
@@ -237,7 +277,7 @@ class YouTubeDownloaderApp(ctk.CTk):
         self.settings_btn = ctk.CTkButton(
             self.header_frame,
             text=self.t["settings_btn"],
-            width=110,
+            width=140,
             height=35,
             fg_color="#27272a",
             hover_color="#3f3f46",
@@ -279,7 +319,7 @@ class YouTubeDownloaderApp(ctk.CTk):
         self.url_entry.grid(row=1, column=0, padx=20, pady=(0, 15), sticky="ew")
         self.url_entry.focus()
 
-        # 2. Compact Options Grid (Type, Quality, Mode, Speed side-by-side in 2x2 grid)
+        # 2. Compact Options Grid (Type, Quality, Mode, Speed side-by-side)
         self.options_grid = ctk.CTkFrame(self.main_card, fg_color="transparent")
         self.options_grid.grid(row=2, column=0, padx=20, pady=(0, 15), sticky="ew")
         self.options_grid.grid_columnconfigure((0, 1, 2, 3), weight=1)
@@ -422,23 +462,28 @@ class YouTubeDownloaderApp(ctk.CTk):
     def open_settings_window(self):
         settings_win = ctk.CTkToplevel(self)
         settings_win.title(self.t["settings_title"])
-        settings_win.geometry("500x250")
+        settings_win.geometry("560x520")
         settings_win.resizable(False, False)
         settings_win.grab_set()
 
         settings_win.update_idletasks()
-        x = self.winfo_x() + (self.winfo_width() // 2) - (500 // 2)
-        y = self.winfo_y() + (self.winfo_height() // 2) - (250 // 2)
+        x = self.winfo_x() + (self.winfo_width() // 2) - (560 // 2)
+        y = self.winfo_y() + (self.winfo_height() // 2) - (520 // 2)
         settings_win.geometry(f"+{x}+{y}")
 
-        lbl = ctk.CTkLabel(settings_win, text=self.t["settings_path_label"], font=("Segoe UI", 13, "bold"))
-        lbl.pack(padx=25, pady=(30, 10), anchor="w")
+        # Scrollable frame inside settings
+        scroll_frame = ctk.CTkScrollableFrame(settings_win, fg_color="transparent", width=520, height=430)
+        scroll_frame.pack(padx=20, pady=15, fill="both", expand=True)
 
-        frame = ctk.CTkFrame(settings_win, fg_color="transparent")
-        frame.pack(padx=25, pady=5, fill="x")
-        frame.grid_columnconfigure(0, weight=1)
+        # 1. Save Path
+        lbl_path = ctk.CTkLabel(scroll_frame, text=self.t["settings_path_label"], font=("Segoe UI", 12, "bold"))
+        lbl_path.pack(anchor="w", pady=(5, 5))
 
-        path_e = ctk.CTkEntry(frame, height=38, fg_color="#18181b", border_color="#3f3f46")
+        path_frame = ctk.CTkFrame(scroll_frame, fg_color="transparent")
+        path_frame.pack(fill="x", pady=(0, 15))
+        path_frame.grid_columnconfigure(0, weight=1)
+
+        path_e = ctk.CTkEntry(path_frame, height=35, fg_color="#18181b", border_color="#3f3f46")
         path_e.grid(row=0, column=0, padx=(0, 10), sticky="ew")
         path_e.insert(0, self.config_data.get("save_path", os.path.join(os.path.expanduser("~"), "Downloads")))
 
@@ -448,13 +493,78 @@ class YouTubeDownloaderApp(ctk.CTk):
                 path_e.delete(0, tk.END)
                 path_e.insert(0, d)
 
-        b_btn = ctk.CTkButton(frame, text=self.t["browse_btn"], width=100, height=38, fg_color="#3f3f46", hover_color="#52525b", command=browse_settings)
+        b_btn = ctk.CTkButton(path_frame, text=self.t["browse_btn"], width=90, height=35, fg_color="#3f3f46", hover_color="#52525b", command=browse_settings)
         b_btn.grid(row=0, column=1)
+
+        # 2. Audio Codec & Bitrate
+        audio_frame = ctk.CTkFrame(scroll_frame, fg_color="transparent")
+        audio_frame.pack(fill="x", pady=(0, 15))
+        audio_frame.grid_columnconfigure((0, 1), weight=1)
+
+        lbl_codec = ctk.CTkLabel(audio_frame, text=self.t["audio_codec_label"], font=("Segoe UI", 12, "bold"))
+        lbl_codec.grid(row=0, column=0, padx=(0, 5), sticky="w")
+        codec_menu = ctk.CTkOptionMenu(audio_frame, values=["mp3", "m4a", "wav", "flac"], height=32, fg_color="#18181b", button_color="#3f3f46")
+        codec_menu.grid(row=1, column=0, padx=(0, 5), pady=(5, 0), sticky="ew")
+        codec_menu.set(self.config_data.get("audio_codec", "mp3"))
+
+        lbl_bitrate = ctk.CTkLabel(audio_frame, text=self.t["audio_bitrate_label"], font=("Segoe UI", 12, "bold"))
+        lbl_bitrate.grid(row=0, column=1, padx=(5, 0), sticky="w")
+        bitrate_menu = ctk.CTkOptionMenu(audio_frame, values=["320", "256", "192", "128"], height=32, fg_color="#18181b", button_color="#3f3f46")
+        bitrate_menu.grid(row=1, column=1, padx=(5, 0), pady=(5, 0), sticky="ew")
+        bitrate_menu.set(self.config_data.get("audio_bitrate", "192"))
+
+        # 3. Metadata & Thumbnails
+        lbl_meta = ctk.CTkLabel(scroll_frame, text=self.t["meta_thumb_label"], font=("Segoe UI", 12, "bold"))
+        lbl_meta.pack(anchor="w", pady=(5, 5))
+
+        meta_chk = ctk.CTkCheckBox(scroll_frame, text=self.t["embed_meta_chk"], font=("Segoe UI", 11))
+        meta_chk.pack(anchor="w", pady=2)
+        if self.config_data.get("embed_meta", True):
+            meta_chk.select()
+
+        thumb_chk = ctk.CTkCheckBox(scroll_frame, text=self.t["embed_thumb_chk"], font=("Segoe UI", 11))
+        thumb_chk.pack(anchor="w", pady=(2, 15))
+        if self.config_data.get("embed_thumb", True):
+            thumb_chk.select()
+
+        # 4. Subtitles
+        lbl_subs = ctk.CTkLabel(scroll_frame, text=self.t["subs_label"], font=("Segoe UI", 12, "bold"))
+        lbl_subs.pack(anchor="w", pady=(5, 5))
+
+        subs_chk = ctk.CTkCheckBox(scroll_frame, text=self.t["download_subs_chk"], font=("Segoe UI", 11))
+        subs_chk.pack(anchor="w", pady=(2, 15))
+        if self.config_data.get("download_subs", False):
+            subs_chk.select()
+
+        # 5. Concurrent Fragments & Theme
+        adv_frame = ctk.CTkFrame(scroll_frame, fg_color="transparent")
+        adv_frame.pack(fill="x", pady=(0, 15))
+        adv_frame.grid_columnconfigure((0, 1), weight=1)
+
+        lbl_frags = ctk.CTkLabel(adv_frame, text=self.t["frags_label"], font=("Segoe UI", 12, "bold"))
+        lbl_frags.grid(row=0, column=0, padx=(0, 5), sticky="w")
+        frags_menu = ctk.CTkOptionMenu(adv_frame, values=["1", "2", "4", "8", "16"], height=32, fg_color="#18181b", button_color="#3f3f46")
+        frags_menu.grid(row=1, column=0, padx=(0, 5), pady=(5, 0), sticky="ew")
+        frags_menu.set(str(self.config_data.get("concurrent_frags", "4")))
+
+        lbl_theme = ctk.CTkLabel(adv_frame, text=self.t["theme_label"], font=("Segoe UI", 12, "bold"))
+        lbl_theme.grid(row=0, column=1, padx=(5, 0), sticky="w")
+        theme_menu = ctk.CTkOptionMenu(adv_frame, values=["green", "blue", "dark-blue"], height=32, fg_color="#18181b", button_color="#3f3f46")
+        theme_menu.grid(row=1, column=1, padx=(5, 0), pady=(5, 0), sticky="ew")
+        theme_menu.set(self.config_data.get("theme_color", "green"))
 
         def save_and_close():
             new_path = path_e.get().strip()
             if os.path.exists(new_path):
                 self.config_data["save_path"] = new_path
+                self.config_data["audio_codec"] = codec_menu.get()
+                self.config_data["audio_bitrate"] = bitrate_menu.get()
+                self.config_data["embed_meta"] = bool(meta_chk.get())
+                self.config_data["embed_thumb"] = bool(thumb_chk.get())
+                self.config_data["download_subs"] = bool(subs_chk.get())
+                self.config_data["concurrent_frags"] = frags_menu.get()
+                self.config_data["theme_color"] = theme_menu.get()
+                
                 save_config(self.config_data)
                 messagebox.showinfo(self.t["success_title"], self.t["settings_saved"], parent=settings_win)
                 settings_win.destroy()
@@ -462,7 +572,7 @@ class YouTubeDownloaderApp(ctk.CTk):
                 messagebox.showerror(self.t["error_title"], "المجلد غير موجود أو غير صالح!", parent=settings_win)
 
         save_btn = ctk.CTkButton(settings_win, text=self.t["save_settings_btn"], font=("Segoe UI", 13, "bold"), height=42, fg_color="#10b981", hover_color="#059669", command=save_and_close)
-        save_btn.pack(padx=25, pady=(20, 20), fill="x")
+        save_btn.pack(padx=20, pady=(0, 15), fill="x")
 
     def change_language(self, choice):
         if "AR" in choice:
@@ -660,8 +770,17 @@ class YouTubeDownloaderApp(ctk.CTk):
                 'no_color': True,
                 'merge_output_format': 'mp4',
                 'download_archive': os.path.join(save_path, 'downloaded_archive.txt'),
+                'concurrent_fragment_downloads': int(self.config_data.get("concurrent_frags", 4)),
             }
 
+            # Subtitles
+            if self.config_data.get("download_subs", False):
+                ydl_opts['writesubtitles'] = True
+                ydl_opts['writeautomaticsub'] = True
+                ydl_opts['subtitleslangs'] = ['ar', 'en']
+                ydl_opts['embedsubtitles'] = True
+
+            # Mode
             if "Single" in mode or "فردي" in mode or "Tekli" in mode:
                 ydl_opts['extract_flat'] = False
                 ydl_opts['noplaylist'] = True
@@ -670,6 +789,7 @@ class YouTubeDownloaderApp(ctk.CTk):
                 ydl_opts['noplaylist'] = False
                 self.log("Download mode: Playlist / Batch")
 
+            # Speed limit
             if "500 KB" in speed_limit:
                 ydl_opts['ratelimit'] = 500 * 1024
             elif "1 MB" in speed_limit:
@@ -679,14 +799,25 @@ class YouTubeDownloaderApp(ctk.CTk):
             elif "5 MB" in speed_limit:
                 ydl_opts['ratelimit'] = 5 * 1024 * 1024
 
+            # Type & Quality
+            audio_codec = self.config_data.get("audio_codec", "mp3")
+            audio_bitrate = self.config_data.get("audio_bitrate", "192")
+
             if "صوت" in download_type or "Audio" in download_type or "Ses" in download_type:
                 ydl_opts['format'] = 'bestaudio/best'
-                ydl_opts['postprocessors'] = [{
+                postproc = [{
                     'key': 'FFmpegExtractAudio',
-                    'preferredcodec': 'mp3',
-                    'preferredquality': '192',
+                    'preferredcodec': audio_codec,
+                    'preferredquality': audio_bitrate,
                 }]
-                self.log("Download settings: Audio only (MP3)")
+                if self.config_data.get("embed_meta", True):
+                    postproc.append({'key': 'FFmpegMetadata'})
+                if self.config_data.get("embed_thumb", True):
+                    ydl_opts['writethumbnail'] = True
+                    postproc.append({'key': 'EmbedThumbnail'})
+                
+                ydl_opts['postprocessors'] = postproc
+                self.log(f"Download settings: Audio only ({audio_codec} @ {audio_bitrate}kbps)")
             else:
                 if "1080p" in quality:
                     ydl_opts['format'] = 'bestvideo[height<=1080]+bestaudio/best[height<=1080]/best'
@@ -699,6 +830,12 @@ class YouTubeDownloaderApp(ctk.CTk):
                 else:
                     ydl_opts['format'] = 'bestvideo+bestaudio/best'
                 
+                v_postproc = []
+                if self.config_data.get("embed_meta", True):
+                    v_postproc.append({'key': 'FFmpegMetadata'})
+                if v_postproc:
+                    ydl_opts['postprocessors'] = v_postproc
+
                 self.log(f"Download settings: Video quality {quality}")
 
             total_items = [0]
