@@ -1,31 +1,31 @@
 # Advanced YouTube Downloader (GUI)
 
-أداة رسومية متقدمة وسهلة الاستخدام لتحميل الفيديوهات وقوائم التشغيل (Playlists) من YouTube بجودات مختلفة أو تحويلها إلى ملفات صوتية MP3، مع واجهة عصرية مبنية بـ CustomTkinter.
+An advanced and user-friendly GUI application built with Python and CustomTkinter to download videos and playlists from YouTube in various resolutions, or convert them directly to high-quality MP3 audio.
 
 ---
 
-## 🛠️ المميزات الرئيسية:
-1. **واجهة رسومية بسيطة وعصرية** (تدعم الوضع المظلم والفاتح تلقائياً).
-2. **تحميل فردي أو جماعي:** دعم تحميل الفيديوهات المفردة أو قوائم التشغيل كاملة (Playlists) في مجلد مرتب تلقائياً.
-3. **اختر الدقة والجودة:** إمكانية اختيار دقة الفيديو (1080p, 720p, 480p, 360p) أو التحويل المباشر إلى صوت **MP3**.
-4. **تحديد سرعة التحميل (Rate Limit):** إمكانية تقييد السرعة (500 KB/s إلى 5 MB/s) لعدم استهلاك كامل الإنترنت.
-5. **الإيقاف واستكمال التحميل:** زر إيقاف مؤقت/إلغاء آمن، مع حفظ الأرشيف التلقائي (`downloaded_archive.txt`) لتخطي الملفات المحملة مسبقاً عند الاستكمال لاحقاً.
-6. **شريط تقدم ثنائي:** شريط خاص بتحميل الملف الحالي (النسبة، السرعة، والوقت المتبقي) وشريط إجمالي لتقدم قائمة التشغيل.
-7. **تثبيت تلقائي للمكتبات:** الأداة تتحقق من تثبيت جميع المكتبات والاعتمادات اللازمة وتثبيتها تلقائياً عند أول فتح.
-8. **دمج تلقائي للفيديو والصوت** عبر `FFmpeg`.
+## 🛠️ Key Features:
+1. **Modern GUI:** Clean, responsive user interface supporting automatic Light/Dark mode via CustomTkinter.
+2. **Flexible Download Modes:** Download single videos or entire playlists with automatic directory organization.
+3. **Resolution & Quality Selector:** Choose your preferred video resolution (Best, 1080p, 720p, 480p, 360p) or extract audio as **MP3**.
+4. **Download Rate Limiting:** Optional speed limits (from 500 KB/s up to 5 MB/s) to manage your bandwidth.
+5. **Pause & Resume Support:** Safe stop/cancel button combined with automatic archive logging (`downloaded_archive.txt`) to skip already downloaded files when resuming later.
+6. **Dual Progress Bars:** Real-time progress bar for the current item (speed, percentage, ETA) plus an overall playlist progress tracker.
+7. **Auto-Dependency Installer:** Automatically checks and installs all required packages (`yt-dlp`, `customtkinter`, `imageio-ffmpeg`) on first launch.
+8. **Automatic FFmpeg Merging:** Automatically handles video and audio stream merging into high-compatibility `.mp4` files.
 
 ---
 
-## 🚀 طريقة التشغيل:
-1. تأكد من تثبيت [Python 3.8+](https://www.python.org/) على جهازك.
-2. قم بتشغيل الملف مباشرة:
+## 🚀 How to Run:
+1. Ensure [Python 3.8+](https://www.python.org/) is installed on your system.
+2. Run the application script:
    ```bash
    python downloader.py
    ```
-   *(ستقوم الأداة بفحص وتثبيت المكتبات المطلوبة `yt-dlp`, `customtkinter`, `imageio-ffmpeg` تلقائياً عند المرة الأولى).*
+   *(On first run, the tool will automatically check and install any missing dependencies).*
 
 ---
 
 ## 👨‍💻 Developed by
 **Mahmoud Ali**  
-GitHub: [github.com/mahmoudali](https://github.com/mahmoudali)
+GitHub: [github.com/Mahmu0dAli](https://github.com/Mahmu0dAli)
