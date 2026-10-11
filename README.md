@@ -26,14 +26,6 @@ An advanced and user-friendly GUI application built with Python and CustomTkinte
 
 ---
 
-## 🔄 Auto-Sync to GitHub:
-To easily commit and push any future updates to your GitHub repository with confirmation, run:
-```bash
-python update_git.py
-```
-
----
-
 ## 👨‍💻 Developed by
 **Mahmoud Ali**  
 GitHub: [github.com/Mahmu0dAli](https://github.com/Mahmu0dAli)
