@@ -1,31 +1,101 @@
-# Advanced YouTube Downloader (GUI)
+<div align="center">
 
-An advanced and user-friendly GUI application built with Python and CustomTkinter to download videos and playlists from YouTube in various resolutions, or convert them directly to high-quality MP3 audio.
+# 🎬 Advanced YouTube Downloader (GUI)
+
+<p align="center">
+  <b>A powerful, modern, and lightning-fast desktop application to download videos and playlists from YouTube with custom resolution, audio extraction, rate limiting, and real-time progress tracking.</b>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.8%2B-blue?style=for-the-badge&logo=python&logoColor=white" alt="Python">
+  <img src="https://img.shields.io/badge/CustomTkinter-Modern%20UI-green?style=for-the-badge" alt="CustomTkinter">
+  <img src="https://img.shields.io/badge/yt--dlp-Downloader-red?style=for-the-badge&logo=youtube" alt="yt-dlp">
+  <img src="https://img.shields.io/badge/FFmpeg-Integrated-orange?style=for-the-badge&logo=ffmpeg&logoColor=white" alt="FFmpeg">
+  <img src="https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge" alt="License">
+</p>
+
+<p align="center">
+  🌐 <b>Multi-Language Support:</b> English 🇺🇸 | العربية 🇸🇦 | Türkçe 🇹🇷
+</p>
+
+</div>
 
 ---
 
-## 🛠️ Key Features:
-1. **Modern GUI:** Clean, responsive user interface supporting automatic Light/Dark mode via CustomTkinter.
-2. **Flexible Download Modes:** Download single videos or entire playlists with automatic directory organization.
-3. **Resolution & Quality Selector:** Choose your preferred video resolution (Best, 1080p, 720p, 480p, 360p) or extract audio as **MP3**.
-4. **Download Rate Limiting:** Optional speed limits (from 500 KB/s up to 5 MB/s) to manage your bandwidth.
-5. **Pause & Resume Support:** Safe stop/cancel button combined with automatic archive logging (`downloaded_archive.txt`) to skip already downloaded files when resuming later.
-6. **Dual Progress Bars:** Real-time progress bar for the current item (speed, percentage, ETA) plus an overall playlist progress tracker.
-7. **Auto-Dependency Installer:** Automatically checks and installs all required packages (`yt-dlp`, `customtkinter`, `imageio-ffmpeg`) on first launch.
-8. **Automatic FFmpeg Merging:** Automatically handles video and audio stream merging into high-compatibility `.mp4` files.
+## ✨ Key Features
+
+| Feature | Description |
+| :--- | :--- |
+| 🎨 **Modern & Adaptive GUI** | Sleek interface built with CustomTkinter supporting system Light/Dark mode. |
+| 🌍 **Multi-Language UI** | Switch instantly between **English**, **Arabic**, and **Turkish** on the fly. |
+| 📥 **Single & Playlist Modes** | Download standalone videos or entire playlists with auto-folder organization. |
+| 🎚️ **Resolution & Quality Selector** | Choose video quality (Best, 1080p, 720p, 480p, 360p) or convert directly to **MP3**. |
+| ⚡ **Bandwidth Rate Limiting** | Restrict download speeds (500 KB/s up to 5 MB/s) to save network bandwidth. |
+| ⏸️ **Pause / Cancel & Resume** | Safe stop button with built-in archive logging (`downloaded_archive.txt`) to skip downloaded files when resuming. |
+| 📊 **Dual Progress Bars** | Real-time tracking for the **current file** (percentage, speed, ETA) and **overall playlist progress**. |
+| 📦 **Auto-Dependency Installer** | Automatically verifies and installs required packages (`yt-dlp`, `customtkinter`, `imageio-ffmpeg`) on first startup. |
+| 🔄 **Seamless FFmpeg Integration** | Automatically merges high-definition video and audio streams into `.mp4` containers. |
 
 ---
 
-## 🚀 How to Run:
-1. Ensure [Python 3.8+](https://www.python.org/) is installed on your system.
-2. Run the application script:
+## 🚀 Quick Start
+
+### Prerequisites
+* Ensure [Python 3.8 or higher](https://www.python.org/) is installed on your system.
+
+### Installation & Running
+1. Clone the repository or download the source files:
+   ```bash
+   git clone https://github.com/Mahmu0dAli/Youtube-Download.git
+   cd Youtube-Download
+   ```
+2. Run the application:
    ```bash
    python downloader.py
    ```
-   *(On first run, the tool will automatically check and install any missing dependencies).*
+   > 💡 *Note: On the first launch, the app will automatically check and install all necessary dependencies.*
 
 ---
 
-## 👨‍💻 Developed by
-**Mahmoud Ali**  
-GitHub: [github.com/Mahmu0dAli](https://github.com/Mahmu0dAli)
+## 📸 User Interface Overview
+
+```text
++--------------------------------------------------------------------------+
+| Language: [ العربية (AR) ▾ ]                                             |
+| URL / Playlist: [ Paste YouTube link here...                         ]   |
+| Type: [ Video (Video) ▾ ]           Quality: [ Best Quality (Best) ▾ ]   |
+| Mode: [ Playlist / Batch ▾ ]        Speed Limit: [ Unlimited (Unlim.) ▾] |
+| Save Path: [ C:/Users/.../Downloads               ] [ Browse... ]        |
+|                                                                          |
+| [ Start Download ]                  [ Pause / Cancel ]                   |
+|                                                                          |
+| Current Item: [ File name... | 45% | Speed: 2.5 MB/s | ETA: 00:12 ]      |
+| [========================>               ]                               |
+| Overall Progress: [ 3 / 7 completed ]                                    |
+| [===========================>            ]                               |
+|                                                                          |
+| [ Log console output & real-time yt-dlp details...                     ] |
++--------------------------------------------------------------------------+
+```
+
+---
+
+## 🛠️ Built With
+
+* **[Python](https://www.python.org/)** - Core programming language.
+* **[CustomTkinter](https://github.com/TomSchimansky/CustomTkinter)** - Modern, dark-mode compatible UI framework.
+* **[yt-dlp](https://github.com/yt-dlp/yt-dlp)** - Feature-rich command-line audio/video downloader.
+* **[imageio-ffmpeg](https://github.com/imageio/imageio-ffmpeg)** - Standalone FFmpeg binaries wrapper.
+
+---
+
+## 👨‍💻 Author
+
+**Mahmoud Ali**
+* GitHub: [@Mahmu0dAli](https://github.com/Mahmu0dAli)
+
+---
+
+## ⭐️ Show your support
+
+Give a ⭐️ if this project helped you!
