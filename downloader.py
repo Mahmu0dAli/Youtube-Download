@@ -84,7 +84,6 @@ TRANSLATIONS = {
         "mode_single": "📄 فيديو فردي فقط (Single)",
         "speed_label": "تحديد سرعة النقل:",
         "speed_unlimited": "🚀 غير محدود (Unlimited)",
-        "path_label": "مسار الحفظ المحلي:",
         "browse_btn": "تصفح...",
         "download_btn": "بدء التحميل الآن",
         "stop_btn": "إيقاف مؤقت / إلغاء",
@@ -127,7 +126,6 @@ TRANSLATIONS = {
         "mode_single": "📄 Single Video Only",
         "speed_label": "Bandwidth Limit:",
         "speed_unlimited": "🚀 Unlimited",
-        "path_label": "Destination Directory:",
         "browse_btn": "Browse...",
         "download_btn": "Start Download",
         "stop_btn": "Pause / Cancel",
@@ -170,7 +168,6 @@ TRANSLATIONS = {
         "mode_single": "📄 Sadece Tekli Video",
         "speed_label": "Bant Genişliği Sınırı:",
         "speed_unlimited": "🚀 Sınırsız",
-        "path_label": "Kayıt Klasörü:",
         "browse_btn": "Gözat...",
         "download_btn": "İndirmeyi Başlat",
         "stop_btn": "Duraklat / İptal",
@@ -191,7 +188,7 @@ TRANSLATIONS = {
         "stopped": "İşlem kullanıcı tarafından durduruldu.",
         "downloading": "İndiriliyor",
         "speed": "Hız",
-        "eta": "Kalan Süре",
+        "eta": "Kalan Süre",
         "processing": "FFmpeg ile işleniyor ve birleştiriliyor...",
         "completed": "tamamlandı",
         "footer": "Designed & Developed by Mahmoud Ali • Enterprise Grade"
@@ -207,8 +204,8 @@ class YouTubeDownloaderApp(ctk.CTk):
         self.t = TRANSLATIONS[self.current_lang]
 
         self.title(self.t["title"])
-        self.geometry("900x780")
-        self.minsize(800, 720)
+        self.geometry("900x730")
+        self.minsize(800, 680)
 
         self.grid_columnconfigure(0, weight=1)
         self.grid_rowconfigure(6, weight=1)
@@ -341,31 +338,8 @@ class YouTubeDownloaderApp(ctk.CTk):
         )
         self.speed_menu.grid(row=5, column=1, padx=20, pady=8, sticky="ew")
 
-        # 4. Save Path
-        self.path_label = ctk.CTkLabel(self.main_card, text=self.t["path_label"], font=("Segoe UI", 12))
-        self.path_label.grid(row=6, column=0, padx=20, pady=8, sticky="w")
-
-        self.path_sub_frame = ctk.CTkFrame(self.main_card, fg_color="transparent")
-        self.path_sub_frame.grid(row=6, column=1, padx=20, pady=8, sticky="ew")
-        self.path_sub_frame.grid_columnconfigure(0, weight=1)
-
-        self.path_entry = ctk.CTkEntry(self.path_sub_frame, height=35, fg_color="#18181b", border_color="#3f3f46")
-        self.path_entry.grid(row=0, column=0, padx=(0, 10), sticky="ew")
-        self.path_entry.insert(0, self.config_data.get("save_path", os.path.join(os.path.expanduser("~"), "Downloads")))
-
-        self.browse_btn = ctk.CTkButton(
-            self.path_sub_frame, 
-            text=self.t["browse_btn"], 
-            width=100, 
-            height=35,
-            fg_color="#3f3f46", 
-            hover_color="#52525b",
-            command=self.browse_path
-        )
-        self.browse_btn.grid(row=0, column=1)
-
-        spacer = ctk.CTkLabel(self.main_card, text="", height=5)
-        spacer.grid(row=7, column=0)
+        spacer = ctk.CTkLabel(self.main_card, text="", height=10)
+        spacer.grid(row=6, column=0)
 
         # --- Action Buttons ---
         self.btn_frame = ctk.CTkFrame(self, fg_color="transparent")
@@ -446,9 +420,8 @@ class YouTubeDownloaderApp(ctk.CTk):
         settings_win.title(self.t["settings_title"])
         settings_win.geometry("500x250")
         settings_win.resizable(False, False)
-        settings_win.grab_set() # Modal window
+        settings_win.grab_set()
 
-        # Center window
         settings_win.update_idletasks()
         x = self.winfo_x() + (self.winfo_width() // 2) - (500 // 2)
         y = self.winfo_y() + (self.winfo_height() // 2) - (250 // 2)
@@ -463,7 +436,7 @@ class YouTubeDownloaderApp(ctk.CTk):
 
         path_e = ctk.CTkEntry(frame, height=38, fg_color="#18181b", border_color="#3f3f46")
         path_e.grid(row=0, column=0, padx=(0, 10), sticky="ew")
-        path_e.insert(0, self.path_entry.get())
+        path_e.insert(0, self.config_data.get("save_path", os.path.join(os.path.expanduser("~"), "Downloads")))
 
         def browse_settings():
             d = filedialog.askdirectory(parent=settings_win)
@@ -477,8 +450,6 @@ class YouTubeDownloaderApp(ctk.CTk):
         def save_and_close():
             new_path = path_e.get().strip()
             if os.path.exists(new_path):
-                self.path_entry.delete(0, tk.END)
-                self.path_entry.insert(0, new_path)
                 self.config_data["save_path"] = new_path
                 save_config(self.config_data)
                 messagebox.showinfo(self.t["success_title"], self.t["settings_saved"], parent=settings_win)
@@ -525,10 +496,9 @@ class YouTubeDownloaderApp(ctk.CTk):
         self.mode_var.set(self.t["mode_playlist"])
 
         self.speed_label.configure(text=self.t["speed_label"])
-        self.speed_menu.configure(values=[self.t["speed_unlimited"], "500 KB/s", "1 MB/s", "2 MB/s", "5 MB/s"], variable=self.speed_var)
+        self.speed_menu.configure(values=[self.t["speed_unlimited"], "500 KB/s", "1 MB/s", "2 MB/s", "5 MB/s"])
+        self.speed_var.set(self.t["speed_unlimited"])
 
-        self.path_label.configure(text=self.t["path_label"])
-        self.browse_btn.configure(text=self.t["browse_btn"])
         self.download_btn.configure(text=self.t["download_btn"])
         self.stop_btn.configure(text=self.t["stop_btn"])
         self.curr_label_title.configure(text=self.t["curr_item_label"])
@@ -557,12 +527,6 @@ class YouTubeDownloaderApp(ctk.CTk):
             else:
                 self.quality_menu.configure(values=[self.t["qual_best_video"], "1080p Full HD", "720p HD", "480p", "360p"])
                 self.quality_var.set(self.t["qual_best_video"])
-
-    def browse_path(self):
-        dir_path = filedialog.askdirectory()
-        if dir_path:
-            self.path_entry.delete(0, tk.END)
-            self.path_entry.insert(0, dir_path)
 
     def log(self, message):
         self.msg_queue.put(("log", message))
@@ -642,7 +606,7 @@ class YouTubeDownloaderApp(ctk.CTk):
             messagebox.showerror(self.t["error_title"], self.t["error_url"])
             return
 
-        save_path = self.path_entry.get().strip()
+        save_path = self.config_data.get("save_path", os.path.join(os.path.expanduser("~"), "Downloads"))
         if not os.path.exists(save_path):
             try:
                 os.makedirs(save_path)
@@ -776,4 +740,4 @@ class YouTubeDownloaderApp(ctk.CTk):
 
 if __name__ == "__main__":
     app = YouTubeDownloaderApp()
-    app.mainLoop() if hasattr(app, "mainLoop") else app.mainloop()
+    app.mainloop()
