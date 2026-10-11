@@ -38,7 +38,19 @@
 
 ---
 
-## 🚀 Quick Start
+## 🐧 Arch Linux (`yay` / AUR) Installation
+
+If you are using Arch Linux or an AUR helper like `yay`, you can install this tool directly using the provided `PKGBUILD`:
+
+```bash
+git clone https://github.com/Mahmu0dAli/Youtube-Download.git
+cd Youtube-Download
+makepkg -si
+```
+Or via AUR (once published):
+```bash
+yay -S youtube-download-git
+```
 
 ### Prerequisites
 * Ensure [Python 3.8 or higher](https://www.python.org/) is installed on your system.
