@@ -42,118 +42,124 @@ import imageio_ffmpeg
 ffmpeg_path = imageio_ffmpeg.get_ffmpeg_exe()
 os.environ["PATH"] += os.pathsep + os.path.dirname(ffmpeg_path)
 
-ctk.set_appearance_mode("System")
-ctk.set_default_color_theme("blue")
+ctk.set_appearance_mode("Dark")
+ctk.set_default_color_theme("green")
 
 # --- Translations Dictionary ---
 TRANSLATIONS = {
     "ar": {
-        "title": "أداة تحميل الفيديوهات وقوائم التشغيل (Advanced YouTube Downloader)",
-        "url_label": "رابط الفيديو / القائمة:",
-        "url_placeholder": "الصق الرابط هنا (Ctrl+V)...",
-        "type_label": "النوع:",
-        "type_video": "فيديو (Video)",
-        "type_audio": "صوت فقط (Audio MP3)",
-        "quality_label": "الدقة والجودة:",
-        "qual_best_video": "أفضل دقة (Best)",
-        "qual_best_audio": "أفضل جودة صوت (MP3)",
-        "mode_label": "وضع التحميل:",
-        "mode_playlist": "قائمة/جماعي (Playlist/Batch)",
-        "mode_single": "فردي فقط (Single Video)",
-        "speed_label": "تحديد السرعة:",
-        "speed_unlimited": "غير محدود (Unlimited)",
-        "path_label": "مجلد الحفظ:",
-        "browse_btn": "استعراض...",
-        "download_btn": "بدء التحميل",
+        "title": "YouTube Downloader Pro | Enterprise Edition",
+        "header_title": "مستكشف ومحمل يوتيوب الاحترافي",
+        "header_subtitle": "تحميل الفيديوهات وقوائم التشغيل بأعلى كفاءة وجودة",
+        "url_label": "رابط الفيديو أو قائمة التشغيل:",
+        "url_placeholder": "https://www.youtube.com/watch?v=... أو رابط القائمة",
+        "type_label": "نوع التحميل:",
+        "type_video": "🎬 فيديو عالي الجودة (Video)",
+        "type_audio": "🎵 صوت فقط نقي (MP3 Audio)",
+        "quality_label": "الدقة المطلوبة:",
+        "qual_best_video": "⭐ أفضل دقة متاحة (Best)",
+        "qual_best_audio": "⭐ أفضل جودة صوت (192kbps)",
+        "mode_label": "نمط التحميل:",
+        "mode_playlist": "📚 قائمة تشغيل كاملة (Playlist)",
+        "mode_single": "📄 فيديو فردي فقط (Single)",
+        "speed_label": "تحديد سرعة النقل:",
+        "speed_unlimited": "🚀 غير محدود (Unlimited)",
+        "path_label": "مسار الحفظ المحلي:",
+        "browse_btn": "تصفح...",
+        "download_btn": "بدء التحميل الآن",
         "stop_btn": "إيقاف مؤقت / إلغاء",
-        "curr_item_label": "الملف الحالي:",
-        "waiting": "في الانتظار...",
-        "overall_label": "التقدم الإجمالي:",
-        "lang_label": "اللغة (Language):",
-        "success_title": "نجاح",
-        "success_msg": "تم تحميل الملفات بنجاح!",
-        "error_title": "خطأ",
-        "error_url": "الرجاء إدخال الرابط!",
-        "error_path": "تعذر إنشاء مجلد الحفظ:",
-        "stopped": "تم التوقف / حدث خطأ.",
-        "downloading": "جاري التحميل...",
+        "curr_item_label": "الحالة الحالية:",
+        "waiting": "في انتظار بدء المهمة...",
+        "overall_label": "التقدم الكلي للقائمة:",
+        "lang_label": "اللغة:",
+        "success_title": "عملية ناجحة",
+        "success_msg": "تم تحميل ومعالجة جميع الملفات بنجاح!",
+        "error_title": "تنبيه خطأ",
+        "error_url": "الرجاء إدخال رابط صالح أولاً!",
+        "error_path": "تعذر إنشاء أو الوصول لمجلد الحفظ:",
+        "stopped": "تم إيقاف العملية بواسطة المستخدم.",
+        "downloading": "جاري التحميل",
         "speed": "السرعة",
-        "eta": "متبقي",
-        "processing": "جاري المعالجة والدمج (FFmpeg)...",
+        "eta": "الوقت المتبقي",
+        "processing": "جاري معالجة الدمج والتصدير عبر FFmpeg...",
         "completed": "مكتمل",
-        "footer": "Developed by Mahmoud Ali | GitHub: github.com/Mahmu0dAli"
+        "footer": "Designed & Developed by Mahmoud Ali • Enterprise Grade"
     },
     "en": {
-        "title": "Advanced YouTube Downloader",
-        "url_label": "Video / Playlist URL:",
-        "url_placeholder": "Paste URL here (Ctrl+V)...",
-        "type_label": "Type:",
-        "type_video": "Video",
-        "type_audio": "Audio Only (MP3)",
-        "quality_label": "Quality:",
-        "qual_best_video": "Best Quality",
-        "qual_best_audio": "Best Audio (MP3)",
-        "mode_label": "Mode:",
-        "mode_playlist": "Playlist / Batch",
-        "mode_single": "Single Video",
-        "speed_label": "Speed Limit:",
-        "speed_unlimited": "Unlimited",
-        "path_label": "Save Path:",
+        "title": "YouTube Downloader Pro | Enterprise Edition",
+        "header_title": "YouTube Downloader Pro",
+        "header_subtitle": "High-performance video & playlist extraction suite",
+        "url_label": "Video or Playlist URL:",
+        "url_placeholder": "https://www.youtube.com/watch?v=... or playlist link",
+        "type_label": "Media Type:",
+        "type_video": "🎬 High-Def Video",
+        "type_audio": "🎵 Pure Audio (MP3)",
+        "quality_label": "Resolution / Quality:",
+        "qual_best_video": "⭐ Best Resolution",
+        "qual_best_audio": "⭐ Best Audio (192kbps)",
+        "mode_label": "Execution Mode:",
+        "mode_playlist": "📚 Full Playlist / Batch",
+        "mode_single": "📄 Single Video Only",
+        "speed_label": "Bandwidth Limit:",
+        "speed_unlimited": "🚀 Unlimited",
+        "path_label": "Destination Directory:",
         "browse_btn": "Browse...",
         "download_btn": "Start Download",
         "stop_btn": "Pause / Cancel",
-        "curr_item_label": "Current Item:",
-        "waiting": "Waiting...",
+        "curr_item_label": "Current Task:",
+        "waiting": "Waiting for task...",
         "overall_label": "Overall Progress:",
         "lang_label": "Language:",
         "success_title": "Success",
-        "success_msg": "Files downloaded successfully!",
+        "success_msg": "All files downloaded and processed successfully!",
         "error_title": "Error",
-        "error_url": "Please enter a URL!",
-        "error_path": "Could not create save directory:",
-        "stopped": "Stopped / Error occurred.",
-        "downloading": "Downloading...",
+        "error_url": "Please enter a valid URL!",
+        "error_path": "Could not create or access directory:",
+        "stopped": "Operation stopped by user.",
+        "downloading": "Downloading",
         "speed": "Speed",
         "eta": "ETA",
-        "processing": "Processing & Merging (FFmpeg)...",
+        "processing": "Processing & Merging via FFmpeg...",
         "completed": "completed",
-        "footer": "Developed by Mahmoud Ali | GitHub: github.com/Mahmu0dAli"
+        "footer": "Designed & Developed by Mahmoud Ali • Enterprise Grade"
     },
     "tr": {
-        "title": "Gelişmiş YouTube İndirici (Advanced YouTube Downloader)",
-        "url_label": "Video / Oynatma Listesi URL:",
-        "url_placeholder": "URL'yi buraya yapıştırın (Ctrl+V)...",
-        "type_label": "Tür:",
-        "type_video": "Video",
-        "type_audio": "Sadece Ses (Audio MP3)",
-        "quality_label": "Kalite:",
-        "qual_best_video": "En İyi Kalite (Best)",
-        "qual_best_audio": "En İyi Ses (MP3)",
-        "mode_label": "Mod:",
-        "mode_playlist": "Oynatma Listesi / Toplu",
-        "mode_single": "Tekli Video",
-        "speed_label": "Hız Sınırı:",
-        "speed_unlimited": "Sınırsız (Unlimited)",
-        "path_label": "Kayıt Yolu:",
+        "title": "YouTube Downloader Pro | Enterprise Edition",
+        "header_title": "YouTube Downloader Pro",
+        "header_subtitle": "Yüksek performanslı video ve oynatma listesi indirme aracı",
+        "url_label": "Video veya Oynatma Listesi URL:",
+        "url_placeholder": "https://www.youtube.com/watch?v=... veya liste linki",
+        "type_label": "Medya Türü:",
+        "type_video": "🎬 Yüksek Kalite Video",
+        "type_audio": "🎵 Saf Ses (MP3 Audio)",
+        "quality_label": "Çözünürlük / Kalite:",
+        "qual_best_video": "⭐ En İyi Çözünürlük",
+        "qual_best_audio": "⭐ En İyi Ses (192kbps)",
+        "mode_label": "İşlem Modu:",
+        "mode_playlist": "📚 Tüm Liste / Toplu",
+        "mode_single": "📄 Sadece Tekli Video",
+        "speed_label": "Bant Genişliği Sınırı:",
+        "speed_unlimited": "🚀 Sınırsız",
+        "path_label": "Kayıt Klasörü:",
         "browse_btn": "Gözat...",
         "download_btn": "İndirmeyi Başlat",
         "stop_btn": "Duraklat / İptal",
-        "curr_item_label": "Mevcut Öğe:",
-        "waiting": "Bekliyor...",
+        "curr_item_label": "Mevcut Durum:",
+        "waiting": "Görev bekleniyor...",
         "overall_label": "Genel İlerleme:",
-        "lang_label": "Dil (Language):",
+        "lang_label": "Dil:",
         "success_title": "Başarılı",
-        "success_msg": "Dosyalar başarıyla indirildi!",
+        "success_msg": "Tüm dosyalar başarıyla indirildi ve işlendi!",
         "error_title": "Hata",
-        "error_url": "Lütfen bir URL girin!",
-        "error_path": "Kayıt dizini oluşturulamadı:",
-        "stopped": "Durduruldu / Hata oluştu.",
-        "downloading": "İndiriliyor...",
+        "error_url": "Lütfen geçerli bir URL girin!",
+        "error_path": "Dizin oluşturulamadı veya erişilemedi:",
+        "stopped": "İşlem kullanıcı tarafından durduruldu.",
+        "downloading": "İndiriliyor",
         "speed": "Hız",
-        "eta": "Kalan",
-        "processing": "İşleniyor ve Birleştiriliyor (FFmpeg)...",
+        "eta": "Kalan Süre",
+        "processing": "FFmpeg ile işleniyor ve birleştiriliyor...",
         "completed": "tamamlandı",
-        "footer": "Developed by Mahmoud Ali | GitHub: github.com/Mahmu0dAli"
+        "footer": "Designed & Developed by Mahmoud Ali • Enterprise Grade"
     }
 }
 
@@ -161,187 +167,227 @@ class YouTubeDownloaderApp(ctk.CTk):
     def __init__(self):
         super().__init__()
 
-        self.current_lang = "ar"  # Default language
+        self.current_lang = "ar"
         self.t = TRANSLATIONS[self.current_lang]
 
         self.title(self.t["title"])
-        self.geometry("850x730")
-        self.minsize(750, 680)
+        self.geometry("900x780")
+        self.minsize(800, 720)
 
         self.grid_columnconfigure(0, weight=1)
-        self.grid_rowconfigure(7, weight=1)
+        self.grid_rowconfigure(6, weight=1)
 
-        # 0. Language Selector Frame
-        self.lang_frame = ctk.CTkFrame(self, fg_color="transparent")
-        self.lang_frame.grid(row=0, column=0, padx=20, pady=(10, 0), sticky="ew")
-        self.lang_frame.grid_columnconfigure(1, weight=1)
+        # --- Top Enterprise Header ---
+        self.header_frame = ctk.CTkFrame(self, fg_color="#18181b", corner_radius=0, height=80)
+        self.header_frame.grid(row=0, column=0, sticky="ew")
+        self.header_frame.grid_columnconfigure(0, weight=1)
+        self.header_frame.grid_columnconfigure(1, weight=0)
 
-        self.lang_label = ctk.CTkLabel(self.lang_frame, text=self.t["lang_label"], font=("Arial", 12, "bold"))
-        self.lang_label.grid(row=0, column=0, padx=(0, 10), sticky="w")
+        self.logo_title = ctk.CTkLabel(
+            self.header_frame, 
+            text="⚡ " + self.t["header_title"], 
+            font=("Segoe UI", 20, "bold"), 
+            text_color="#f43f5e"
+        )
+        self.logo_title.grid(row=0, column=0, padx=25, pady=(15, 0), sticky="w")
 
+        self.logo_sub = ctk.CTkLabel(
+            self.header_frame, 
+            text=self.t["header_subtitle"], 
+            font=("Segoe UI", 12), 
+            text_color="#a1a1aa"
+        )
+        self.logo_sub.grid(row=1, column=0, padx=25, pady=(0, 15), sticky="w")
+
+        # Language Switcher in Header
         self.lang_var = ctk.StringVar(value="العربية (AR)")
         self.lang_menu = ctk.CTkOptionMenu(
-            self.lang_frame,
+            self.header_frame,
             values=["العربية (AR)", "English (EN)", "Türkçe (TR)"],
             variable=self.lang_var,
             command=self.change_language,
-            width=150
+            width=140,
+            fg_color="#27272a",
+            button_color="#3f3f46",
+            button_hover_color="#52525b"
         )
-        self.lang_menu.grid(row=0, column=1, sticky="w")
+        self.lang_menu.grid(row=0, column=1, rowspan=2, padx=25, sticky="e")
 
-        # 1. URL Frame
-        self.url_frame = ctk.CTkFrame(self, fg_color="transparent")
-        self.url_frame.grid(row=1, column=0, padx=20, pady=(10, 5), sticky="ew")
-        self.url_frame.grid_columnconfigure(1, weight=1)
+        # --- Main Card Container ---
+        self.main_card = ctk.CTkFrame(self, fg_color="#202024", corner_radius=12)
+        self.main_card.grid(row=1, column=0, padx=20, pady=15, sticky="ew")
+        self.main_card.grid_columnconfigure(1, weight=1)
 
-        self.url_label = ctk.CTkLabel(self.url_frame, text=self.t["url_label"], font=("Arial", 14, "bold"))
-        self.url_label.grid(row=0, column=0, padx=(0, 10), sticky="w")
+        # 1. URL Section
+        self.url_label = ctk.CTkLabel(self.main_card, text=self.t["url_label"], font=("Segoe UI", 13, "bold"))
+        self.url_label.grid(row=0, column=0, padx=20, pady=(20, 5), sticky="w")
 
-        self.url_entry = ctk.CTkEntry(self.url_frame, placeholder_text=self.t["url_placeholder"], height=35)
-        self.url_entry.grid(row=0, column=1, sticky="ew")
+        self.url_entry = ctk.CTkEntry(
+            self.main_card, 
+            placeholder_text=self.t["url_placeholder"], 
+            height=40,
+            font=("Segoe UI", 12),
+            fg_color="#18181b",
+            border_color="#3f3f46"
+        )
+        self.url_entry.grid(row=1, column=0, columnspan=2, padx=20, pady=(0, 15), sticky="ew")
         self.url_entry.focus()
 
-        # 2. Options Frame (Type, Resolution)
-        self.options_frame = ctk.CTkFrame(self)
-        self.options_frame.grid(row=2, column=0, padx=20, pady=5, sticky="ew")
-        self.options_frame.grid_columnconfigure(1, weight=1)
-        self.options_frame.grid_columnconfigure(3, weight=1)
-
-        self.type_label = ctk.CTkLabel(self.options_frame, text=self.t["type_label"], font=("Arial", 12))
-        self.type_label.grid(row=0, column=0, padx=15, pady=12, sticky="w")
+        # 2. Options Grid (Type & Quality)
+        self.type_label = ctk.CTkLabel(self.main_card, text=self.t["type_label"], font=("Segoe UI", 12))
+        self.type_label.grid(row=2, column=0, padx=20, pady=8, sticky="w")
         
         self.type_var = ctk.StringVar(value=self.t["type_video"])
         self.type_menu = ctk.CTkOptionMenu(
-            self.options_frame, 
+            self.main_card, 
             values=[self.t["type_video"], self.t["type_audio"]],
             variable=self.type_var,
-            command=self.on_type_change
+            command=self.on_type_change,
+            height=35,
+            fg_color="#18181b",
+            button_color="#3f3f46"
         )
-        self.type_menu.grid(row=0, column=1, padx=15, pady=12, sticky="ew")
+        self.type_menu.grid(row=2, column=1, padx=20, pady=8, sticky="ew")
 
-        self.quality_label = ctk.CTkLabel(self.options_frame, text=self.t["quality_label"], font=("Arial", 12))
-        self.quality_label.grid(row=0, column=2, padx=15, pady=12, sticky="w")
+        self.quality_label = ctk.CTkLabel(self.main_card, text=self.t["quality_label"], font=("Segoe UI", 12))
+        self.quality_label.grid(row=3, column=0, padx=20, pady=8, sticky="w")
 
         self.quality_var = ctk.StringVar(value=self.t["qual_best_video"])
         self.quality_menu = ctk.CTkOptionMenu(
-            self.options_frame,
-            values=[self.t["qual_best_video"], "1080p", "720p", "480p", "360p"],
-            variable=self.quality_var
+            self.main_card,
+            values=[self.t["qual_best_video"], "1080p Full HD", "720p HD", "480p", "360p"],
+            variable=self.quality_var,
+            height=35,
+            fg_color="#18181b",
+            button_color="#3f3f46"
         )
-        self.quality_menu.grid(row=0, column=3, padx=15, pady=12, sticky="ew")
+        self.quality_menu.grid(row=3, column=1, padx=20, pady=8, sticky="ew")
 
-        # 3. Advanced Options Frame (Mode, Speed Limit)
-        self.adv_frame = ctk.CTkFrame(self)
-        self.adv_frame.grid(row=3, column=0, padx=20, pady=5, sticky="ew")
-        self.adv_frame.grid_columnconfigure(1, weight=1)
-        self.adv_frame.grid_columnconfigure(3, weight=1)
-
-        self.mode_label = ctk.CTkLabel(self.adv_frame, text=self.t["mode_label"], font=("Arial", 12))
-        self.mode_label.grid(row=0, column=0, padx=15, pady=12, sticky="w")
+        # 3. Advanced Options (Mode & Speed)
+        self.mode_label = ctk.CTkLabel(self.main_card, text=self.t["mode_label"], font=("Segoe UI", 12))
+        self.mode_label.grid(row=4, column=0, padx=20, pady=8, sticky="w")
 
         self.mode_var = ctk.StringVar(value=self.t["mode_playlist"])
         self.mode_menu = ctk.CTkOptionMenu(
-            self.adv_frame,
+            self.main_card,
             values=[self.t["mode_playlist"], self.t["mode_single"]],
-            variable=self.mode_var
+            variable=self.mode_var,
+            height=35,
+            fg_color="#18181b",
+            button_color="#3f3f46"
         )
-        self.mode_menu.grid(row=0, column=1, padx=15, pady=12, sticky="ew")
+        self.mode_menu.grid(row=4, column=1, padx=20, pady=8, sticky="ew")
 
-        self.speed_label = ctk.CTkLabel(self.adv_frame, text=self.t["speed_label"], font=("Arial", 12))
-        self.speed_label.grid(row=0, column=2, padx=15, pady=12, sticky="w")
+        self.speed_label = ctk.CTkLabel(self.main_card, text=self.t["speed_label"], font=("Segoe UI", 12))
+        self.speed_label.grid(row=5, column=0, padx=20, pady=8, sticky="w")
 
         self.speed_var = ctk.StringVar(value=self.t["speed_unlimited"])
         self.speed_menu = ctk.CTkOptionMenu(
-            self.adv_frame,
+            self.main_card,
             values=[self.t["speed_unlimited"], "500 KB/s", "1 MB/s", "2 MB/s", "5 MB/s"],
-            variable=self.speed_var
+            variable=self.speed_var,
+            height=35,
+            fg_color="#18181b",
+            button_color="#3f3f46"
         )
-        self.speed_menu.grid(row=0, column=3, padx=15, pady=12, sticky="ew")
+        self.speed_menu.grid(row=5, column=1, padx=20, pady=8, sticky="ew")
 
-        # 4. Save Path Frame
-        self.path_frame = ctk.CTkFrame(self, fg_color="transparent")
-        self.path_frame.grid(row=4, column=0, padx=20, pady=5, sticky="ew")
-        self.path_frame.grid_columnconfigure(1, weight=1)
+        # 4. Save Path
+        self.path_label = ctk.CTkLabel(self.main_card, text=self.t["path_label"], font=("Segoe UI", 12))
+        self.path_label.grid(row=6, column=0, padx=20, pady=8, sticky="w")
 
-        self.path_label = ctk.CTkLabel(self.path_frame, text=self.t["path_label"], font=("Arial", 12))
-        self.path_label.grid(row=0, column=0, padx=(0, 10), sticky="w")
+        self.path_sub_frame = ctk.CTkFrame(self.main_card, fg_color="transparent")
+        self.path_sub_frame.grid(row=6, column=1, padx=20, pady=8, sticky="ew")
+        self.path_sub_frame.grid_columnconfigure(0, weight=1)
 
-        self.path_entry = ctk.CTkEntry(self.path_frame, height=30)
-        self.path_entry.grid(row=0, column=1, padx=(0, 10), sticky="ew")
+        self.path_entry = ctk.CTkEntry(self.path_sub_frame, height=35, fg_color="#18181b", border_color="#3f3f46")
+        self.path_entry.grid(row=0, column=0, padx=(0, 10), sticky="ew")
         self.path_entry.insert(0, os.path.join(os.path.expanduser("~"), "Downloads"))
 
-        self.browse_btn = ctk.CTkButton(self.path_frame, text=self.t["browse_btn"], width=100, command=self.browse_path)
-        self.browse_btn.grid(row=0, column=2)
+        self.browse_btn = ctk.CTkButton(
+            self.path_sub_frame, 
+            text=self.t["browse_btn"], 
+            width=100, 
+            height=35,
+            fg_color="#3f3f46", 
+            hover_color="#52525b",
+            command=self.browse_path
+        )
+        self.browse_btn.grid(row=0, column=1)
 
-        # 5. Buttons Frame (Download & Stop)
+        # Padding at bottom of card
+        spacer = ctk.CTkLabel(self.main_card, text="", height=5)
+        spacer.grid(row=7, column=0)
+
+        # --- Action Buttons ---
         self.btn_frame = ctk.CTkFrame(self, fg_color="transparent")
-        self.btn_frame.grid(row=5, column=0, padx=20, pady=10, sticky="ew")
+        self.btn_frame.grid(row=2, column=0, padx=20, pady=5, sticky="ew")
         self.btn_frame.grid_columnconfigure((0, 1), weight=1)
 
         self.download_btn = ctk.CTkButton(
             self.btn_frame, 
             text=self.t["download_btn"], 
-            font=("Arial", 15, "bold"), 
-            height=42,
-            fg_color="#2fa572", 
-            hover_color="#1e7b51",
+            font=("Segoe UI", 14, "bold"), 
+            height=48,
+            fg_color="#10b981", 
+            hover_color="#059669",
             command=self.start_download_thread
         )
-        self.download_btn.grid(row=0, column=0, padx=(0, 5), sticky="ew")
+        self.download_btn.grid(row=0, column=0, padx=(0, 8), sticky="ew")
 
         self.stop_btn = ctk.CTkButton(
             self.btn_frame, 
             text=self.t["stop_btn"], 
-            font=("Arial", 15, "bold"), 
-            height=42,
-            fg_color="#c0392b", 
-            hover_color="#962d22",
+            font=("Segoe UI", 14, "bold"), 
+            height=48,
+            fg_color="#ef4444", 
+            hover_color="#dc2626",
             state="disabled",
             command=self.stop_download
         )
-        self.stop_btn.grid(row=0, column=1, padx=(5, 0), sticky="ew")
+        self.stop_btn.grid(row=0, column=1, padx=(8, 0), sticky="ew")
 
-        # 6. Progress Bars Frame
-        self.prog_frame = ctk.CTkFrame(self)
-        self.prog_frame.grid(row=6, column=0, padx=20, pady=5, sticky="ew")
-        self.prog_frame.grid_columnconfigure(1, weight=1)
+        # --- Progress Card ---
+        self.prog_card = ctk.CTkFrame(self, fg_color="#202024", corner_radius=12)
+        self.prog_card.grid(row=3, column=0, padx=20, pady=10, sticky="ew")
+        self.prog_card.grid_columnconfigure(1, weight=1)
 
         # Current Item Progress
-        self.curr_label_title = ctk.CTkLabel(self.prog_frame, text=self.t["curr_item_label"], font=("Arial", 11, "bold"))
-        self.curr_label_title.grid(row=0, column=0, padx=10, pady=(10, 2), sticky="w")
+        self.curr_label_title = ctk.CTkLabel(self.prog_card, text=self.t["curr_item_label"], font=("Segoe UI", 11, "bold"))
+        self.curr_label_title.grid(row=0, column=0, padx=15, pady=(12, 2), sticky="w")
 
-        self.curr_info_label = ctk.CTkLabel(self.prog_frame, text=self.t["waiting"], font=("Arial", 11), text_color="gray")
-        self.curr_info_label.grid(row=0, column=1, padx=10, pady=(10, 2), sticky="w")
+        self.curr_info_label = ctk.CTkLabel(self.prog_card, text=self.t["waiting"], font=("Segoe UI", 11), text_color="#a1a1aa")
+        self.curr_info_label.grid(row=0, column=1, padx=15, pady=(12, 2), sticky="w")
 
-        self.curr_bar = ctk.CTkProgressBar(self.prog_frame)
-        self.curr_bar.grid(row=1, column=0, columnspan=2, padx=10, pady=(0, 10), sticky="ew")
+        self.curr_bar = ctk.CTkProgressBar(self.prog_card, progress_color="#10b981", fg_color="#18181b")
+        self.curr_bar.grid(row=1, column=0, columnspan=2, padx=15, pady=(0, 10), sticky="ew")
         self.curr_bar.set(0)
 
         # Overall Progress
-        self.overall_label_title = ctk.CTkLabel(self.prog_frame, text=self.t["overall_label"], font=("Arial", 11, "bold"))
-        self.overall_label_title.grid(row=2, column=0, padx=10, pady=(5, 2), sticky="w")
+        self.overall_label_title = ctk.CTkLabel(self.prog_card, text=self.t["overall_label"], font=("Segoe UI", 11, "bold"))
+        self.overall_label_title.grid(row=2, column=0, padx=15, pady=(2, 2), sticky="w")
 
-        self.overall_info_label = ctk.CTkLabel(self.prog_frame, text="0 / 0", font=("Arial", 11), text_color="gray")
-        self.overall_info_label.grid(row=2, column=1, padx=10, pady=(5, 2), sticky="w")
+        self.overall_info_label = ctk.CTkLabel(self.prog_card, text="0 / 0", font=("Segoe UI", 11), text_color="#a1a1aa")
+        self.overall_info_label.grid(row=2, column=1, padx=15, pady=(2, 2), sticky="w")
 
-        self.overall_bar = ctk.CTkProgressBar(self.prog_frame)
-        self.overall_bar.grid(row=3, column=0, columnspan=2, padx=10, pady=(0, 10), sticky="ew")
+        self.overall_bar = ctk.CTkProgressBar(self.prog_card, progress_color="#3b82f6", fg_color="#18181b")
+        self.overall_bar.grid(row=3, column=0, columnspan=2, padx=15, pady=(0, 12), sticky="ew")
         self.overall_bar.set(0)
 
-        # 7. Log Console & Footer Frame
+        # --- Console Log & Footer ---
         self.console_frame = ctk.CTkFrame(self, fg_color="transparent")
-        self.console_frame.grid(row=7, column=0, padx=20, pady=(5, 10), sticky="nsew")
+        self.console_frame.grid(row=4, column=0, padx=20, pady=(5, 10), sticky="nsew")
         self.console_frame.grid_columnconfigure(0, weight=1)
         self.console_frame.grid_rowconfigure(0, weight=1)
 
-        self.log_box = ctk.CTkTextbox(self.console_frame, font=("Consolas", 11))
+        self.log_box = ctk.CTkTextbox(self.console_frame, font=("Consolas", 11), fg_color="#18181b", text_color="#d4d4d8")
         self.log_box.grid(row=0, column=0, sticky="nsew", pady=(0, 5))
 
         self.footer_label = ctk.CTkLabel(
             self.console_frame, 
             text=self.t["footer"], 
-            font=("Arial", 10), 
-            text_color="gray"
+            font=("Segoe UI", 10), 
+            text_color="#71717a"
         )
         self.footer_label.grid(row=1, column=0, sticky="e")
 
@@ -362,7 +408,8 @@ class YouTubeDownloaderApp(ctk.CTk):
 
     def update_ui_texts(self):
         self.title(self.t["title"])
-        self.lang_label.configure(text=self.t["lang_label"])
+        self.logo_title.configure(text="⚡ " + self.t["header_title"])
+        self.logo_sub.configure(text=self.t["header_subtitle"])
         self.url_label.configure(text=self.t["url_label"])
         self.url_entry.configure(placeholder_text=self.t["url_placeholder"])
         self.type_label.configure(text=self.t["type_label"])
@@ -400,21 +447,21 @@ class YouTubeDownloaderApp(ctk.CTk):
                 self.quality_menu.configure(values=[self.t["qual_best_audio"], "192kbps", "128kbps"])
                 self.quality_var.set(self.t["qual_best_audio"])
             else:
-                self.quality_menu.configure(values=[self.t["qual_best_video"], "1080p", "720p", "480p", "360p"])
+                self.quality_menu.configure(values=[self.t["qual_best_video"], "1080p Full HD", "720p HD", "480p", "360p"])
                 self.quality_var.set(self.t["qual_best_video"])
         elif self.current_lang == "tr":
             if "Ses" in choice:
                 self.quality_menu.configure(values=[self.t["qual_best_audio"], "192kbps", "128kbps"])
                 self.quality_var.set(self.t["qual_best_audio"])
             else:
-                self.quality_menu.configure(values=[self.t["qual_best_video"], "1080p", "720p", "480p", "360p"])
+                self.quality_menu.configure(values=[self.t["qual_best_video"], "1080p Full HD", "720p HD", "480p", "360p"])
                 self.quality_var.set(self.t["qual_best_video"])
         else:
             if "Audio" in choice:
                 self.quality_menu.configure(values=[self.t["qual_best_audio"], "192kbps", "128kbps"])
                 self.quality_var.set(self.t["qual_best_audio"])
             else:
-                self.quality_menu.configure(values=[self.t["qual_best_video"], "1080p", "720p", "480p", "360p"])
+                self.quality_menu.configure(values=[self.t["qual_best_video"], "1080p Full HD", "720p HD", "480p", "360p"])
                 self.quality_var.set(self.t["qual_best_video"])
 
     def browse_path(self):
@@ -487,7 +534,7 @@ class YouTubeDownloaderApp(ctk.CTk):
             speed = d.get('_speed_str', 'N/A')
             eta = d.get('_eta_str', 'N/A')
             filename = os.path.basename(d.get('filename', ''))
-            self.set_curr_info(f"{filename[:40]}... | {p_str_clean} | {self.t['speed']}: {speed} | {self.t['eta']}: {eta}")
+            self.set_curr_info(f"{filename[:35]}... | {p_str_clean} | {self.t['speed']}: {speed} | {self.t['eta']}: {eta}")
             
         elif d['status'] == 'finished':
             filename = os.path.basename(d.get('filename', ''))
